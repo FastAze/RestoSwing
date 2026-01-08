@@ -1,18 +1,16 @@
 package testui;
 
-
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class api_commande_accepter {
-    private String apiUrl = "http://localhost/www/api/commande_accepter.php";
-    public boolean accepterCommande(int idCommande) {
+public class api_commande_refuser {
+    private String apiUrl = "http://localhost/www/api/commande_refuser.php";
+    public boolean commandeRefuser(int idCommande) {
         try {
-            URL url = new URL(apiUrl.replace("detail_commande.php", "commande_accepter.php")
+            URL url = new URL(apiUrl.replace("detail_commande.php", "commande_refuser.php")
                     + "?idCommande=" + idCommande);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -40,10 +38,9 @@ public class api_commande_accepter {
             return jsonResponse.optBoolean("success", false);
 
         } catch (Exception ex) {
-            System.err.println("Erreur lors de l'acceptation de la commande : " + ex.getMessage());
+            System.err.println("Erreur lors de la finalisation de la commande : " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
     }
-
 }

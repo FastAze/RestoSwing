@@ -1,6 +1,7 @@
 package testui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 
 public class detail_commande extends JDialog {
@@ -8,7 +9,7 @@ public class detail_commande extends JDialog {
     private JButton accepterButton;
     private JButton refuserButton;
     private JButton prêteButton;
-    private JTable table1;
+    JTable table1;
     private JButton revenirButton;
     private JButton buttonCancel;
 

@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class api_detail_commande {
-    private String apiUrl = "http://localhost/www/api/detail_commande.php";
+    private String apiUrl = "http://localhost/restoweb/api/detail_commande.php";
 
     public Object[][] recupererDetailCommande(int idCommande) {
         try {
@@ -28,7 +28,7 @@ public class api_detail_commande {
             JSONArray detailsArray = new JSONArray(json.toString());
             Object[][] donnees = new Object[detailsArray.length()][6];
 
-            String[] ordreColonnes = {"idCommande", "dateHeureCom", "loginUtil", "idProduit", "libProduit", "quantite"};
+            String[] ordreColonnes = {"idProduit", "libProduit", "quantite", "idCommande", "dateHeureCom", "loginUtil"};
 
             for (int i = 0; i < detailsArray.length(); i++) {
                 JSONObject detail = detailsArray.getJSONObject(i);

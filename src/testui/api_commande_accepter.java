@@ -1,43 +1,49 @@
 package testui;
 
-import java.io.*;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class api_commande_accepter {
-    private String apiUrl = "http://localhost/restoweb/api/commande_accepter.php";
-
+    private String apiUrl = "http://localhost/www/api/commande_accepter.php";
     public boolean accepterCommande(int idCommande) {
         try {
-            URL url = new URL(apiUrl);
+            URL url = new URL(apiUrl.replace("detail_commande.php", "commande_accepter.php")
+                    + "?idCommande=" + idCommande);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
             conn.setConnectTimeout(5000);
             conn.setReadTimeout(5000);
 
-            String parametres = "idCommande=" + idCommande;
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()))) {
-                writer.write(parametres);
+            int responseCode = conn.getResponseCode();
+
+            BufferedReader reader;
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                reader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
             }
 
-            int codeReponse = conn.getResponseCode();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder reponse = new StringBuilder();
+            StringBuilder response = new StringBuilder();
             String ligne;
             while ((ligne = reader.readLine()) != null) {
-                reponse.append(ligne);
+                response.append(ligne);
             }
             reader.close();
             conn.disconnect();
 
-            return codeReponse == 200;
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            return jsonResponse.optBoolean("success", false);
 
         } catch (Exception ex) {
-            System.err.println("Erreur : " + ex.getMessage());
+            System.err.println("Erreur lors de l'acceptation de la commande : " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
     }
+
 }

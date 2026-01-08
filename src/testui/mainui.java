@@ -13,7 +13,6 @@ public class mainui extends JFrame {
     private JButton detailsButton;
     private JButton quitterButton;
 
-
     public mainui() {
 
         setTitle("RestoSwing");
@@ -24,9 +23,8 @@ public class mainui extends JFrame {
         // table1.setRowSelectionAllowed();
         detail_commande dc = new detail_commande();
 
-
-        String[] JsonColumnNames = {"idCommande", "dateHeureCom", "totalTTC", "idUtilisateur", "libEtat", "loginUtil", "emailUtil"};
-        String[] ColumnNames = {"ID", "Date", "totalTTC", "idUtilisateur", "libEtat", "loginUtil", "emailUtil"};
+        String[] JsonColumnNames = {"idCommande", "dateHeureCom", "libEtat", "COUNT(*)", "totalTTC"};
+        String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
 
         apiteract apiteract = new apiteract();
 
@@ -40,6 +38,7 @@ public class mainui extends JFrame {
         };
         table1.setModel(dataModel);
 
+
         // Bouton quitter
         quitterButton.addActionListener(new ActionListener() {
             @Override
@@ -52,7 +51,12 @@ public class mainui extends JFrame {
         detailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            dc.setVisible(true);
+            int column = 0;
+            int row = table1.getSelectedRow();
+            String value = table1.getModel().getValueAt(row, column).toString();
+            System.out.println(value);
+                dc.setVisible(true);
+
             }
         });
     }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import testui.detail_commande;
 
 public class mainui extends JFrame {
     private JPanel main_menu;
@@ -21,6 +22,7 @@ public class mainui extends JFrame {
         setSize(1000, 600);
         table1.getTableHeader().setReorderingAllowed(false);
         // table1.setRowSelectionAllowed();
+        detail_commande dc = new detail_commande();
 
 
         String[] JsonColumnNames = {"idCommande", "dateHeureCom", "totalTTC", "idUtilisateur", "libEtat", "loginUtil", "emailUtil"};
@@ -38,10 +40,19 @@ public class mainui extends JFrame {
         };
         table1.setModel(dataModel);
 
+        // Bouton quitter
         quitterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        });
+
+        //Bouton détail
+        detailsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            dc.setVisible(true);
             }
         });
     }

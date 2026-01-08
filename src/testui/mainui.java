@@ -20,7 +20,7 @@ public class mainui extends JFrame {
         setSize(1000, 600);
         table1.getTableHeader().setReorderingAllowed(false);
 
-        detail_commande dc = new detail_commande();
+
 
         String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
 
@@ -52,6 +52,7 @@ public class mainui extends JFrame {
             int column = 0;
             int row = table1.getSelectedRow();
             int idc = (int) table1.getModel().getValueAt(row, column);
+                detail_commande dc = new detail_commande(idc);
                 api_detail_commande apiteract2 = new api_detail_commande();
 
                 String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};

@@ -5,7 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class api_commande_accepter {
-    private String apiUrl = "http://localhost/www/api/commande_accepter.php";
+    private String apiUrl = "http://localhost/restoweb/api/commande_accepter.php";
 
     public boolean accepterCommande(int idCommande) {
         try {

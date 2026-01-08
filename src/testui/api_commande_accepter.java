@@ -1,8 +1,6 @@
 package testui;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -14,16 +12,14 @@ public class api_commande_accepter {
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setDoOutput(true);
             conn.setConnectTimeout(5000);
             conn.setReadTimeout(5000);
 
             String parametres = "idCommande=" + idCommande;
-            OutputStream os = conn.getOutputStream();
-            os.write(parametres.getBytes());
-            os.flush();
-            os.close();
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()))) {
+                writer.write(parametres);
+            }
 
             int codeReponse = conn.getResponseCode();
 

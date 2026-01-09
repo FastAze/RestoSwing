@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class mainui extends JFrame {
     private JPanel main_menu;
@@ -11,6 +12,7 @@ public class mainui extends JFrame {
     private JScrollPane scrTbl;
     private JButton detailsButton;
     private JButton quitterButton;
+    private JButton refreshButton;
 
     public mainui() {
 
@@ -19,8 +21,6 @@ public class mainui extends JFrame {
         setContentPane(main_menu);
         setSize(1000, 600);
         table1.getTableHeader().setReorderingAllowed(false);
-
-
 
         String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
 
@@ -55,13 +55,34 @@ public class mainui extends JFrame {
                 detail_commande dc = new detail_commande(idc);
                 api_detail_commande apiteract2 = new api_detail_commande();
 
+
                 String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};
                 Object[][] tableData = apiteract2.recupererDetailCommande(idc);
-
-                DefaultTableModel datamodel2 = new DefaultTableModel(tableData, ColumnNames);
+                for (int i = 0; i < tableData.length; i++) {
+                    String idCommande = tableData[i][3].toString();
+                    String dateHeureCom = tableData[i][4].toString();
+                    String loginUtil = tableData[i][5].toString();
+                    dc.DATELabel.setText(dateHeureCom);
+                    dc.LOGINLabel.setText(loginUtil);
+                    dc.IDcommandLabel.setText(idCommande);
+                    }
+                    DefaultTableModel datamodel2 = new DefaultTableModel(tableData, ColumnNames);
                 dc.table1.setModel(datamodel2);
                 dc.setVisible(true);
 
+            }
+        });
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[][] tableData = apiteract.recupererCommandes();
+                DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                table1.setModel(dataModel);
             }
         });
     }

@@ -11,6 +11,9 @@ public class detail_commande extends JDialog {
     private JButton prêteButton;
     JTable table1;
     private JButton revenirButton;
+    JLabel DATELabel;
+    JLabel LOGINLabel;
+    JLabel IDcommandLabel;
     private JButton buttonCancel;
     public detail_commande(int idc) {
         setContentPane(contentPane);
@@ -33,6 +36,20 @@ public class detail_commande extends JDialog {
                 apiPrete.accepterCommande(idc);
             }
         });
-    }
+        refuserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                api_commande_refuser apiRefus = new api_commande_refuser();
+                apiRefus.commandeRefuser(idc);
+            }
+        });
+        prêteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                api_commande_terminer apiTerm = new api_commande_terminer();
+                apiTerm.accepterTerminer(idc);
 
+            }
+        });
+    }
 }

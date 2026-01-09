@@ -50,7 +50,7 @@ public class api_liste_commandes {
             System.out.println("-- Liste des noces --");
             System.out.println(noces_json);
 
-            String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
+            String[] ColumnNames = {"idCommande", "dateHeureCom", "libEtat", "NbPlat", "totalTTC"};
 
             data = new Object[noces_json.length()][5];
 

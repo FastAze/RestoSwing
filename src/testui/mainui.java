@@ -1,5 +1,7 @@
 package testui;
 
+import org.json.JSONArray;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
@@ -25,8 +27,7 @@ public class mainui extends JFrame {
         String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
 
         api_liste_commandes apiteract = new api_liste_commandes();
-
-        Object[][] tableData = apiteract.recupererCommandes();
+        Object[][] tableData = apiteract.getData();
 
         DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
             @Override

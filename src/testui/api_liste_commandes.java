@@ -1,49 +1,72 @@
 package testui;
+
 import org.json.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class api_liste_commandes {
-    private String apiUrl = "http://localhost/restoweb/api/liste_commandes.php";
+    public Object[][] getData() {
+        String json2 = "";
+        String url = "http://localhost/www/api/liste_commandes.php";
+        Object[][] data = new Object[0][];
 
-    public Object[][] recupererCommandes() {
+        ArrayList<Noce> noces = new ArrayList<>();
+
+        // Créer un HttpClient
+        HttpClient client = HttpClient.newHttpClient();
+        // Crée une requête HTTP GET
         try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder json = new StringBuilder();
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                json.append(ligne);
+            // Construit l'URL de la requête
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(url))
+                    .build();
+            // Envoie la requête et attend la réponse
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            // Vérifie que la réponse est normale
+            if (response.statusCode() == 200) {
+                json2 = response.body();
+            } else {
+                System.err.println("Erreur : Code statut " + response.statusCode());
             }
-            reader.close();
-            conn.disconnect();
-
-            JSONArray commandesArray = new JSONArray(json.toString());
-            Object[][] donnees = new Object[commandesArray.length()][5];
-
-            String[] ordreColonnes = {"idCommande", "dateHeureCom", "libEtat", "COUNT(*)", "totalTTC"};
-
-            for (int i = 0; i < commandesArray.length(); i++) {
-                JSONObject commande = commandesArray.getJSONObject(i);
-
-                for (int j = 0; j < ordreColonnes.length; j++) {
-                    donnees[i][j] = commande.opt(ordreColonnes[j]);
-                }
-            }
-
-            return donnees;
-
         } catch (Exception ex) {
             System.err.println("Erreur : " + ex.getMessage());
-            ex.printStackTrace();
-            return new Object[0][0];
+            //ex.printStackTrace();
         }
+
+        try {
+            JSONArray noces_json = new JSONArray(json2);
+            // Parcoure le tableau JSON
+            for (int i = 0; i < noces_json.length(); i++) {
+                JSONObject noce_json = noces_json.getJSONObject(i);
+                Noce noce = new Noce(noce_json);
+                noces.add(noce);
+            }
+
+
+            System.out.println("-- Liste des noces --");
+            System.out.println(noces_json);
+
+            String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
+
+            data = new Object[noces_json.length()][5];
+
+            for (int i = 0; i < noces_json.length(); i++) {
+                JSONObject noce_json = noces_json.getJSONObject(i);
+
+                for (int j = 0; j < ColumnNames.length; j++) {
+                    data[i][j] = noce_json.opt(ColumnNames[j]);
+                }
+            };
+
+
+        } catch (JSONException ex) {
+            System.err.println("Erreur : " + ex.getMessage());
+            //ex.printStackTrace();
+        }
+        return data;
     }
 }

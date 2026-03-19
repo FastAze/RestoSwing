@@ -55,9 +55,9 @@ public class mainui extends JFrame {
                 detail_commande dc = new detail_commande(idc);
                 api_detail_commande apiteract2 = new api_detail_commande();
 
-
                 String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};
                 Object[][] tableData = apiteract2.recupererDetailCommande(idc);
+
                 for (int i = 0; i < tableData.length; i++) {
                     String idCommande = tableData[i][3].toString();
                     String dateHeureCom = tableData[i][4].toString();
@@ -66,7 +66,7 @@ public class mainui extends JFrame {
                     dc.LOGINLabel.setText(loginUtil);
                     dc.IDcommandLabel.setText(idCommande);
                     }
-                    DefaultTableModel datamodel2 = new DefaultTableModel(tableData, ColumnNames);
+                DefaultTableModel datamodel2 = new DefaultTableModel(tableData, ColumnNames);
                 dc.table1.setModel(datamodel2);
                 dc.setVisible(true);
 

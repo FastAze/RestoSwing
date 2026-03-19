@@ -1,49 +1,32 @@
 package api;
-
-
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class api_commande_accepter {
-    private String apiUrl = "http://localhost/www/api/commande_accepter.php";
     public boolean accepterCommande(int idCommande) {
+        String json = "";
+        String url = "http://localhost/www/api/commande_accepter.php?idCommande=" + idCommande;
+        HttpClient client = HttpClient.newHttpClient();
+
         try {
-            URL url = new URL(apiUrl.replace("detail_commande.php", "commande_accepter.php")
-                    + "?idCommande=" + idCommande);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(url))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            int responseCode = conn.getResponseCode();
-
-            BufferedReader reader;
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            if (response.statusCode() == 200) {
+                json = response.body();
             } else {
-                reader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                System.err.println("Erreur : Code statut " + response.statusCode());
             }
-
-            StringBuilder response = new StringBuilder();
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                response.append(ligne);
-            }
-            reader.close();
-            conn.disconnect();
-
-            JSONObject jsonResponse = new JSONObject(response.toString());
-            return jsonResponse.optBoolean("success", false);
-
         } catch (Exception ex) {
-            System.err.println("Erreur lors de l'acceptation de la commande : " + ex.getMessage());
-            ex.printStackTrace();
-            return false;
+            System.err.println("Erreur : " + ex.getMessage());
         }
-    }
 
+        JSONObject jsonResponse = new JSONObject(json.toString());
+        return jsonResponse.optBoolean("success", false);
+    }
 }

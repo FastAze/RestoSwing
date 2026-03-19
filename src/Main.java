@@ -1,15 +1,13 @@
-package testui;
+import ui.ui_main;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 
 public class Main {
     static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                mainui mainui = new mainui();
+                ui_main mainui = new ui_main();
                 mainui.setVisible(true);
             }
         });

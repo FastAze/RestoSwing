@@ -1,12 +1,14 @@
-package testui;
+package ui;
+
+import api.api_detail_commande;
+import api.api_liste_commandes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
-public class mainui extends JFrame {
+public class ui_main extends JFrame {
     private JPanel main_menu;
     private JTable table1;
     private JScrollPane scrTbl;
@@ -14,7 +16,7 @@ public class mainui extends JFrame {
     private JButton quitterButton;
     private JButton refreshButton;
 
-    public mainui() {
+    public ui_main() {
 
         setTitle("RestoSwing");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +54,7 @@ public class mainui extends JFrame {
             int column = 0;
             int row = table1.getSelectedRow();
             int idc = (int) table1.getModel().getValueAt(row, column);
-                detail_commande dc = new detail_commande(idc);
+                ui_detail_commande dc = new ui_detail_commande(idc);
                 api_detail_commande apiteract2 = new api_detail_commande();
 
                 String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};

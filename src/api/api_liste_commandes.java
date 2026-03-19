@@ -1,4 +1,4 @@
-package testui;
+package api;
 import org.json.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class api_liste_commandes {
-    private String apiUrl = "http://localhost/restoweb/api/liste_commandes.php";
+    private String apiUrl = "http://localhost/www/api/liste_commandes.php";
 
     public Object[][] recupererCommandes() {
         try {

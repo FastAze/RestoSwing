@@ -1,10 +1,13 @@
-package testui;
+package ui;
+
+import api.api_commande_accepter;
+import api.api_commande_refuser;
+import api.api_commande_terminer;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 
-public class detail_commande extends JDialog {
+public class ui_detail_commande extends JDialog {
     private JPanel contentPane;
     private JButton accepterButton;
     private JButton refuserButton;
@@ -15,7 +18,7 @@ public class detail_commande extends JDialog {
     JLabel LOGINLabel;
     JLabel IDcommandLabel;
     private JButton buttonCancel;
-    public detail_commande(int idc) {
+    public ui_detail_commande(int idc) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(revenirButton);

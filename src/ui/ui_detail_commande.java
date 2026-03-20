@@ -23,6 +23,7 @@ public class ui_detail_commande extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(revenirButton);
         setSize(800, 400);
+        setLocationRelativeTo(null);
 
         revenirButton.addActionListener(new ActionListener() {
             @Override

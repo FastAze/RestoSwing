@@ -23,6 +23,7 @@ public class ui_main extends JFrame {
         setContentPane(main_menu);
         setSize(1000, 600);
         table1.getTableHeader().setReorderingAllowed(false);
+        setLocationRelativeTo(null); //Mettre le jframe au mileu de l'écran
 
         String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
 
@@ -74,6 +75,8 @@ public class ui_main extends JFrame {
 
             }
         });
+
+        //Bouton raffraichire
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

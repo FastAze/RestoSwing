@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ui_main extends JFrame {
+public class Commande_details extends JFrame {
     private JPanel main_menu;
     private JTable table1;
     private JScrollPane scrTbl;
@@ -16,7 +16,7 @@ public class ui_main extends JFrame {
     private JButton quitterButton;
     private JButton refreshButton;
 
-    public ui_main() {
+    public Commande_details() {
 
         setTitle("RestoSwing");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

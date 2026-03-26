@@ -7,7 +7,7 @@ import api.api_commande_terminer;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class ui_detail_commande extends JDialog {
+public class Commande_liste extends JDialog {
     private JPanel contentPane;
     private JButton accepterButton;
     private JButton refuserButton;
@@ -18,7 +18,7 @@ public class ui_detail_commande extends JDialog {
     JLabel LOGINLabel;
     JLabel IDcommandLabel;
     private JButton buttonCancel;
-    public ui_detail_commande(int idc) {
+    public Commande_liste(int idc) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(revenirButton);

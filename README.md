@@ -13,7 +13,7 @@ Ce README décrit :
 
 ## 1) Aperçu
 
-RestoSwing contient une interface Swing minimale (package `ui`) avec des classes d'exemple et des utilitaires. Le point d'entrée principal se trouve dans `src/ui/Main.java`.
+RestoSwing contient une interface Swing minimale (package `ui`) avec des classes d'exemple et des utilitaires. Le point d'entrée principal se trouve dans `src/ui/Restoswing.java`.
 
 Objectifs :
 - Démontrer une UI Swing simple
@@ -24,7 +24,7 @@ Objectifs :
 Arborescence principale (les éléments importants) :
 
 - `src/` : sources Java. Le package UI principal est `ui`.
-  - `src/ui/Main.java` : classe principale (point d'entrée)
+  - `src/ui/Restoswing.java` : classe principale (point d'entrée)
   - autres classes UI dans `src/ui`
 - `lib/` : bibliothèques tiers (principalement MigLayout *.jar)
   - `miglayout-core.jar`, `miglayout-swing.jar`, ...
@@ -47,13 +47,13 @@ Il n'y a pas de gestionnaire de dépendances (Maven/Gradle) dans ce projet — l
 
 ## 4) Compiler et exécuter (ligne de commande - macOS / zsh)
 
-Instructions prêtes à copier pour macOS (zsh). Ces commandes vont compiler tous les .java trouvés dans `src/` et lancer la classe `Main` :
+Instructions prêtes à copier pour macOS (zsh). Ces commandes vont compiler tous les .java trouvés dans `src/` et lancer la classe `Restoswing` :
 
 ```bash
 # depuis la racine du projet
 mkdir -p out
 javac -cp "lib/*:libs/*" -d out $(find src -name "*.java")
-java -cp "out:lib/*:libs/*" Main
+java -cp "out:lib/*:libs/*" Restoswing
 ```
 
 Remarques :
@@ -68,7 +68,7 @@ Remarques :
 2. Assurez-vous qu'un SDK Java est configuré (Project Structure > SDKs / Project SDK).
 3. Ajoutez les jars externes (`lib/*.jar` et `libs/*.jar`) en tant que Libraries ou ajoutez-les au module (Project Structure > Modules > Dependencies).
 4. Créez une configuration de type "Application":
-   - Main class : `Main`
+   - Restoswing class : `Restoswing`
    - Classpath: module classpath (les jars ajoutés seront pris en compte)
 5. Lancez avec le bouton Run.
 

@@ -38,19 +38,16 @@ public class api_liste_commandes {
         String[] ordreColonnes = {"idCommande", "dateHeureCom", "libEtat", "COUNT(*)", "totalTTC"};
 
         for (i = 0; i < commandes_json.length(); i++) {
-            // Récupère la region
             JSONObject commande_json = commandes_json.getJSONObject(i);
-            // Récupère les départements de la région
-            lignes = new ArrayList<>(); // Collection des départements
+            lignes = new ArrayList<>();
             JSONArray lignes_json = commande_json.getJSONArray("ligne");
             for (j = 0; j < lignes_json.length(); j++) {
                 JSONObject ligne_json = lignes_json.getJSONObject(j);
-                Ligne ligne = new Ligne(ligne_json.getString("id"), ligne_json.getString("libelle"));
+                Ligne ligne = new Ligne(ligne_json.getInt("idProduit"), ligne_json.getString("libProduit"), ligne_json.getInt("quantite"));
                 lignes.add(ligne);
             }
 
-            // Crée un objet métier à partir du JSON
-            Commande commande = new Commande(lignes_json.getString("id"), lignes_json.getString("libelle"), lignes_json.getBoolean("est_outremer"), departements);
+            Commande commande = new Commande(commande_json.getInt("idCommande"), commande_json.getString("dateHeureCom"), commande_json.getString("libEtat"), commande_json.getInt("COUNT(*)"), commande_json.getString("totalTTC"), commande_json.getString("loginUtil"), lignes);
             commandes.add(commande);
         }
 

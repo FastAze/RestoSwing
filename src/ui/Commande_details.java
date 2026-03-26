@@ -55,7 +55,7 @@ public class ui_main extends JFrame {
             int column = 0;
             int row = table1.getSelectedRow();
             int idc = (int) table1.getModel().getValueAt(row, column);
-                ui_detail_commande dc = new ui_detail_commande(idc);
+                Commande_liste dc = new Commande_liste(idc);
                 api_detail_commande apiteract2 = new api_detail_commande();
 
                 String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};

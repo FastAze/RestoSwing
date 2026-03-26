@@ -76,7 +76,7 @@ Remarques :
 
 ## 6) Générer la Javadoc
 
-Commande pour générer la Javadoc dans le dossier `javadoc/` :
+DAO.Commande pour générer la Javadoc dans le dossier `javadoc/` :
 
 ```bash
 # depuis la racine du projet

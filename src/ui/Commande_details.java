@@ -12,7 +12,7 @@ public class Commande_details extends JDialog {
     private JButton accepterButton;
     private JButton refuserButton;
     private JButton prêteButton;
-    JTable table1;
+    JTable table2;
     private JButton revenirButton;
     JLabel DATELabel;
     JLabel LOGINLabel;

@@ -1,12 +1,13 @@
 package ui;
 
-import DAO.Commande;
+import DAO.Ligne;
 import api.api_liste_commandes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Commande_liste extends JFrame {
     private JPanel main_menu;
@@ -15,8 +16,9 @@ public class Commande_liste extends JFrame {
     private JButton detailsButton;
     private JButton quitterButton;
     private JButton refreshButton;
+    private Object[][] currentTableData;
 
-    public Commande_liste(int idc) {
+    public Commande_liste() {
 
         setTitle("RestoSwing");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,9 +31,9 @@ public class Commande_liste extends JFrame {
 
         api_liste_commandes apiteract = new api_liste_commandes();
 
-        Object[][] tableData = apiteract.recupererCommandes();
+        currentTableData = apiteract.recupererCommandes();
 
-        DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
+        DefaultTableModel dataModel = new DefaultTableModel(currentTableData, ColumnNames){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -52,10 +54,26 @@ public class Commande_liste extends JFrame {
         detailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int selectedRow = table1.getSelectedRow();
+                Commande_details CommandeDetails = new Commande_details(selectedRow);
+                ArrayList<Ligne> lignes = (ArrayList<Ligne>) currentTableData[selectedRow][5];
 
-                String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};
+                String[] ColumnNames = {"ID Produit", "Nom Produit", "Quantité"};
+                Object[][] lignesData = new Object[lignes.size()][3];
 
+                CommandeDetails.IDcommandLabel.setText(currentTableData[selectedRow][0].toString());
+                CommandeDetails.DATELabel.setText(currentTableData[selectedRow][1].toString());
+                CommandeDetails.LOGINLabel.setText(currentTableData[selectedRow][6].toString());
 
+                for (int i = 0; i < lignes.size(); i++) {
+                    lignesData[i][0] = lignes.get(i).idProduit;
+                    lignesData[i][1] = lignes.get(i).libProduit;
+                    lignesData[i][2] = lignes.get(i).quantite;
+                }
+
+                DefaultTableModel detailModel = new DefaultTableModel(lignesData, ColumnNames);
+                CommandeDetails.table2.setModel(detailModel);
+                CommandeDetails.setVisible(true);
             }
         });
 
@@ -63,8 +81,8 @@ public class Commande_liste extends JFrame {
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[][] tableData = apiteract.recupererCommandes();
-                DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
+                currentTableData = apiteract.recupererCommandes();
+                DefaultTableModel dataModel = new DefaultTableModel(currentTableData, ColumnNames){
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;

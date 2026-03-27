@@ -49,7 +49,7 @@ public class api_liste_commandes {
             commandes.add(commande);
         }
 
-        Object[][] donnees = new Object[commandes_json.length()][5];
+        Object[][] donnees = new Object[commandes_json.length()][7];
 
         for (i = 0; i < commandes.size(); i++) {
             donnees[i][0] = commandes.get(i).idCommande;
@@ -58,6 +58,7 @@ public class api_liste_commandes {
             donnees[i][3] = commandes.get(i).nbProduits;
             donnees[i][4] = commandes.get(i).totalTTC;
             donnees[i][5] = commandes.get(i).ligne;
+            donnees[i][6] = commandes.get(i).loginUtil;
         }
 
         return donnees;

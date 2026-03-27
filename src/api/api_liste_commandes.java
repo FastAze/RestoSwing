@@ -34,8 +34,6 @@ public class api_liste_commandes {
         }
 
         JSONArray commandes_json = new JSONArray(json.toString());
-        Object[][] donnees = new Object[commandes_json.length()][5];
-        String[] ordreColonnes = {"idCommande", "dateHeureCom", "libEtat", "COUNT(*)", "totalTTC"};
 
         for (i = 0; i < commandes_json.length(); i++) {
             JSONObject commande_json = commandes_json.getJSONObject(i);
@@ -47,16 +45,20 @@ public class api_liste_commandes {
                 lignes.add(ligne);
             }
 
-            Commande commande = new Commande(commande_json.getInt("idCommande"), commande_json.getString("dateHeureCom"), commande_json.getString("libEtat"), commande_json.getInt("COUNT(*)"), commande_json.getString("totalTTC"), commande_json.getString("loginUtil"), lignes);
+            Commande commande = new Commande(commande_json.getInt("idCommande"), commande_json.getString("dateHeureCom"), commande_json.getString("libEtat"), commande_json.getInt("nbProduits"), commande_json.getString("totalTTC"), commande_json.getString("loginUtil"), lignes);
             commandes.add(commande);
         }
 
-//        for (int i = 0; i < commandesArray.length(); i++) {
-//            JSONObject commande = commandesArray.getJSONObject(i);
-//            for (int j = 0; j < ordreColonnes.length; j++) {
-//                donnees[i][j] = commande.opt(ordreColonnes[j]);
-//            }
-//        }
+        Object[][] donnees = new Object[commandes_json.length()][5];
+
+        for (i = 0; i < commandes.size(); i++) {
+            donnees[i][0] = commandes.get(i).idCommande;
+            donnees[i][1] = commandes.get(i).dateHeureCom;
+            donnees[i][2] = commandes.get(i).libEtat;
+            donnees[i][3] = commandes.get(i).nbProduits;
+            donnees[i][4] = commandes.get(i).totalTTC;
+            donnees[i][5] = commandes.get(i).ligne;
+        }
 
         return donnees;
     }

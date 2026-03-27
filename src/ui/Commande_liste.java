@@ -1,58 +1,76 @@
 package ui;
 
-import api.api_commande_accepter;
-import api.api_commande_refuser;
-import api.api_commande_terminer;
+import DAO.Commande;
+import api.api_liste_commandes;
 
 import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Commande_liste extends JDialog {
-    private JPanel contentPane;
-    private JButton accepterButton;
-    private JButton refuserButton;
-    private JButton prêteButton;
-    JTable table1;
-    private JButton revenirButton;
-    JLabel DATELabel;
-    JLabel LOGINLabel;
-    JLabel IDcommandLabel;
-    private JButton buttonCancel;
+public class Commande_liste extends JFrame {
+    private JPanel main_menu;
+    private JTable table1;
+    private JScrollPane scrTbl;
+    private JButton detailsButton;
+    private JButton quitterButton;
+    private JButton refreshButton;
+
     public Commande_liste(int idc) {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(revenirButton);
-        setSize(800, 400);
-        setLocationRelativeTo(null);
 
-        revenirButton.addActionListener(new ActionListener() {
+        setTitle("RestoSwing");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setContentPane(main_menu);
+        setSize(1000, 600);
+        table1.getTableHeader().setReorderingAllowed(false);
+        setLocationRelativeTo(null); //Mettre le jframe au mileu de l'écran
+
+        String[] ColumnNames = {"ID commande", "Date et heure", "Etat d'avencement", "Nombre de plat", "Total TTC"};
+
+        api_liste_commandes apiteract = new api_liste_commandes();
+
+        Object[][] tableData = apiteract.recupererCommandes();
+
+        DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table1.setModel(dataModel);
+
+
+        // Bouton quitter
+        quitterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                System.exit(0);
             }
         });
 
-        accepterButton.addActionListener(new ActionListener() {
+        //Bouton détail
+        detailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                api_commande_accepter apiPrete = new api_commande_accepter();
-                apiPrete.accepterCommande(idc);
-            }
-        });
-        refuserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                api_commande_refuser apiRefus = new api_commande_refuser();
-                apiRefus.commandeRefuser(idc);
-            }
-        });
-        prêteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                api_commande_terminer apiTerm = new api_commande_terminer();
-                apiTerm.accepterTerminer(idc);
+                String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};
 
+
+            }
+        });
+
+        //Bouton raffraichire
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[][] tableData = apiteract.recupererCommandes();
+                DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                table1.setModel(dataModel);
             }
         });
     }

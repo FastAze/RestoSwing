@@ -1,71 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ui.Commande_details">
-  <grid id="27dc6" binding="main_menu" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="808" height="400"/>
+      <xy x="48" y="54" width="516" height="312"/>
     </constraints>
     <properties/>
-    <border type="none" title="RestoSwing"/>
+    <border type="none"/>
     <children>
-      <vspacer id="c4359">
+      <hspacer id="4363f">
         <constraints>
-          <grid row="1" column="0" row-span="3" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="74744">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="385d0" class="javax.swing.JLabel">
+      <component id="bbf87" class="javax.swing.JButton" binding="accepterButton" default-binding="true">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Commandes"/>
+          <text value="Accepter"/>
         </properties>
       </component>
-      <scrollpane id="aead5" binding="scrTbl">
+      <component id="c6d9a" class="javax.swing.JButton" binding="refuserButton" default-binding="true">
         <constraints>
-          <grid row="1" column="1" row-span="3" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Refuser"/>
+        </properties>
+      </component>
+      <vspacer id="dba8b">
+        <constraints>
+          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="a41c1" class="javax.swing.JButton" binding="prêteButton" default-binding="true">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Prête"/>
+        </properties>
+      </component>
+      <scrollpane id="51fb9">
+        <constraints>
+          <grid row="3" column="0" row-span="5" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="26508" class="javax.swing.JTable" binding="table1" default-binding="true">
+          <component id="67eb0" class="javax.swing.JTable" binding="table1" default-binding="true">
             <constraints/>
-            <properties>
-              <enabled value="true"/>
-            </properties>
-            <clientProperties>
-              <Table.isFileList class="java.lang.Boolean" value="false"/>
-            </clientProperties>
+            <properties/>
           </component>
         </children>
       </scrollpane>
-      <component id="3cd48" class="javax.swing.JButton" binding="detailsButton">
+      <component id="193b8" class="javax.swing.JLabel">
         <constraints>
-          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Détails"/>
+          <text value="RestoSwing : Détail DAO.Commande :"/>
         </properties>
       </component>
-      <component id="b9116" class="javax.swing.JButton" binding="quitterButton" default-binding="true">
+      <component id="f9e17" class="javax.swing.JButton" binding="revenirButton" default-binding="true">
         <constraints>
-          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Quitter"/>
+          <text value="Revenir"/>
         </properties>
       </component>
-      <hspacer id="50f8b">
+      <component id="11206" class="javax.swing.JLabel" binding="DATELabel">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
-      <component id="5eefb" class="javax.swing.JButton" binding="refreshButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Rafraîchir"/>
+          <text value="DATE"/>
+        </properties>
+      </component>
+      <component id="82769" class="javax.swing.JLabel" binding="LOGINLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <text value="LOGIN"/>
+        </properties>
+      </component>
+      <component id="2145a" class="javax.swing.JLabel" binding="IDcommandLabel">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="IDcommand"/>
         </properties>
       </component>
     </children>

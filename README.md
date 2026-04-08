@@ -21,16 +21,30 @@ Objectifs :
 
 ## 2) Structure du dépôt
 
-Arborescence principale (les éléments importants) :
+Arborescence principale (focus sur `src/` et `libs/`) :
 
-- `src/` : sources Java. Le package UI principal est `ui`.
-  - `src/ui/Restoswing.java` : classe principale (point d'entrée)
-  - autres classes UI dans `src/ui`
-- `lib/` : bibliothèques tiers (principalement MigLayout *.jar)
-  - `miglayout-core.jar`, `miglayout-swing.jar`, ...
-- `libs/` : autres bibliothèques (ex. `json-20250517.jar`)
-- `META-INF/MANIFEST.MF` : manifeste (si utile pour packaging)
-- `RestoSwing.iml` : fichier de configuration IntelliJ (module)
+```text
+RestoSwing-main/
+├─ src/
+│  ├─ Main.java
+│  ├─ api/
+│  │  ├─ api_commande_accepter.java
+│  │  ├─ api_commande_refuser.java
+│  │  ├─ api_commande_terminer.java
+│  │  ├─ api_detail_commande.java
+│  │  └─ api_liste_commandes.java
+│  └─ ui/
+│     ├─ ui_main.java
+│     ├─ ui_main.form
+│     ├─ ui_detail_commande.java
+│     └─ ui_detail_commande.form
+├─ libs/
+│  └─ json-20250517.jar
+└─ README.md
+```
+
+- `src/` : tout le code Java (point d'entrée: `src/Main.java`, UI dans `src/ui`, appels API dans `src/api`).
+- `libs/` : dépendances externes jar (`json-20250517.jar`).
 
 ----
 

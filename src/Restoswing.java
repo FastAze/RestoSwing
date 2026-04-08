@@ -1,13 +1,12 @@
-import ui.ui_main;
+import ui.Commande_liste;
 
 import javax.swing.*;
 
-public class Main {
+public class Restoswing {
     static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                ui_main mainui = new ui_main();
+                Commande_liste mainui = new Commande_liste();
                 mainui.setVisible(true);
             }
         });

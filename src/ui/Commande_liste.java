@@ -1,22 +1,24 @@
 package ui;
 
-import api.api_detail_commande;
+import DAO.Ligne;
 import api.api_liste_commandes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class ui_main extends JFrame {
+public class Commande_liste extends JFrame {
     private JPanel main_menu;
     private JTable table1;
     private JScrollPane scrTbl;
     private JButton detailsButton;
     private JButton quitterButton;
     private JButton refreshButton;
+    private Object[][] currentTableData;
 
-    public ui_main() {
+    public Commande_liste() {
 
         setTitle("RestoSwing");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,13 +27,13 @@ public class ui_main extends JFrame {
         table1.getTableHeader().setReorderingAllowed(false);
         setLocationRelativeTo(null); //Mettre le jframe au mileu de l'écran
 
-        String[] ColumnNames = {"ID", "Date", "Etat", "Nombre de plat", "total TTC"};
+        String[] ColumnNames = {"ID commande", "Date et heure", "Etat d'avencement", "Nombre de plat", "Total TTC"};
 
         api_liste_commandes apiteract = new api_liste_commandes();
 
-        Object[][] tableData = apiteract.recupererCommandes();
+        currentTableData = apiteract.recupererCommandes();
 
-        DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
+        DefaultTableModel dataModel = new DefaultTableModel(currentTableData, ColumnNames){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -52,27 +54,26 @@ public class ui_main extends JFrame {
         detailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            int column = 0;
-            int row = table1.getSelectedRow();
-            int idc = (int) table1.getModel().getValueAt(row, column);
-                ui_detail_commande dc = new ui_detail_commande(idc);
-                api_detail_commande apiteract2 = new api_detail_commande();
+                int selectedRow = table1.getSelectedRow();
+                Commande_details CommandeDetails = new Commande_details(selectedRow);
+                ArrayList<Ligne> lignes = (ArrayList<Ligne>) currentTableData[selectedRow][5];
 
-                String[] ColumnNames = {"Produit", "Nom Produit", "Quantite"};
-                Object[][] tableData = apiteract2.recupererDetailCommande(idc);
+                String[] ColumnNames = {"ID Produit", "Nom Produit", "Quantité"};
+                Object[][] lignesData = new Object[lignes.size()][3];
 
-                for (int i = 0; i < tableData.length; i++) {
-                    String idCommande = tableData[i][3].toString();
-                    String dateHeureCom = tableData[i][4].toString();
-                    String loginUtil = tableData[i][5].toString();
-                    dc.DATELabel.setText(dateHeureCom);
-                    dc.LOGINLabel.setText(loginUtil);
-                    dc.IDcommandLabel.setText(idCommande);
-                    }
-                DefaultTableModel datamodel2 = new DefaultTableModel(tableData, ColumnNames);
-                dc.table1.setModel(datamodel2);
-                dc.setVisible(true);
+                CommandeDetails.IDcommandLabel.setText(currentTableData[selectedRow][0].toString());
+                CommandeDetails.DATELabel.setText(currentTableData[selectedRow][1].toString());
+                CommandeDetails.LOGINLabel.setText(currentTableData[selectedRow][6].toString());
 
+                for (int i = 0; i < lignes.size(); i++) {
+                    lignesData[i][0] = lignes.get(i).idProduit;
+                    lignesData[i][1] = lignes.get(i).libProduit;
+                    lignesData[i][2] = lignes.get(i).quantite;
+                }
+
+                DefaultTableModel detailModel = new DefaultTableModel(lignesData, ColumnNames);
+                CommandeDetails.table2.setModel(detailModel);
+                CommandeDetails.setVisible(true);
             }
         });
 
@@ -80,8 +81,8 @@ public class ui_main extends JFrame {
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[][] tableData = apiteract.recupererCommandes();
-                DefaultTableModel dataModel = new DefaultTableModel(tableData, ColumnNames){
+                currentTableData = apiteract.recupererCommandes();
+                DefaultTableModel dataModel = new DefaultTableModel(currentTableData, ColumnNames){
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;

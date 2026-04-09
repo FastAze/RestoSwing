@@ -1,118 +1,124 @@
-# RestoSwing
+# RestoSwing 🍽️
 
-RestoSwing est une petite application Java Swing (interface graphique) destinée à gérer des commandes de restaurant de RestoWeb.
+Application desktop Java Swing pour la gestion des commandes restaurant (liste, détail, acceptation, refus, terminaison), connectée aux API de RestoWeb.
 
-Ce README décrit :
-- l'objectif du projet
-- l'organisation du dépôt
-- les dépendances et où elles se trouvent
-- comment compiler, exécuter et générer la Javadoc (macOS / zsh)
-- comment contribuer
+## 📋 Présentation
 
-----
+RestoSwing est un client lourd Java destiné à l’équipe de préparation.
 
-## 1) Aperçu
+### Objectifs
 
-RestoSwing contient une interface Swing minimale (package `ui`) avec des classes d'exemple et des utilitaires. Le point d'entrée principal se trouve dans `src/ui/Restoswing.java`.
+- Afficher les commandes en attente via API.
+- Consulter le détail d’une commande.
+- Changer l’état d’une commande (accepter, refuser, terminer).
+- Fournir une interface simple et rapide avec Swing.
 
-Objectifs :
-- Démontrer une UI Swing simple
-- Illustrer l'utilisation de MigLayout (dans `lib/`) et d'une petite gestion JSON (dans `libs/`)
+## 🧱 Architecture du projet
 
-## 2) Structure du dépôt
+| Dossier/Fichier | Description |
+|:----------------|:------------|
+| `src/Restoswing.java` | Point d’entrée de l’application |
+| `src/api/` | Appels API REST (liste et actions commande) |
+| `src/DAO/` | Modèles de données (`Commande`, `Ligne`) |
+| `src/ui/` | Fenêtres Swing et formulaires `.form` |
+| `libs/` | Dépendances externes (JSON) |
 
-Arborescence principale (focus sur `src/` et `libs/`) :
+### Arborescence
 
 ```text
-RestoSwing-main/
-├─ src/
-│  ├─ Main.java
-│  ├─ api/
-│  │  ├─ api_commande_accepter.java
-│  │  ├─ api_commande_refuser.java
-│  │  ├─ api_commande_terminer.java
-│  │  ├─ api_detail_commande.java
-│  │  └─ api_liste_commandes.java
-│  └─ ui/
-│     ├─ ui_main.java
-│     ├─ ui_main.form
-│     ├─ ui_detail_commande.java
-│     └─ ui_detail_commande.form
-├─ libs/
-│  └─ json-20250517.jar
-└─ README.md
+RestoSwing/
+├── README.md
+├── RestoSwing.iml
+├── libs/
+├── src/
+│   ├── Restoswing.java
+│   ├── api/
+│   │   ├── api_commande_accepter.java
+│   │   ├── api_commande_refuser.java
+│   │   ├── api_commande_terminer.java
+│   │   └── api_liste_commandes.java
+│   ├── DAO/
+│   │   ├── Commande.java
+│   │   └── Ligne.java
+│   └── ui/
+│       ├── Commande_liste.java
+│       ├── Commande_liste.form
+│       ├── Commande_details.java
+│       └── Commande_details.form
 ```
 
-- `src/` : tout le code Java (point d'entrée: `src/Main.java`, UI dans `src/ui`, appels API dans `src/api`).
-- `libs/` : dépendances externes jar (`json-20250517.jar`).
+## 📦 Dépendances
 
-----
+Ce projet n’utilise pas Maven/Gradle : les dépendances sont embarquées en jar.
 
-## 3) Dépendances
+- `libs/` : bibliothèque JSON (`json-20250517.jar`)
+- `lib/` (si présent sur votre poste) : bibliothèques UI comme MigLayout
 
-Les dépendances sont fournies localement dans :
+> Vérifiez que tous les jars sont bien ajoutés au classpath de votre IDE.
 
-- `lib/` : contient MigLayout (swing et core)
-- `libs/` : contient `json-20250517.jar`
+## 🚀 Installation et exécution
 
-Il n'y a pas de gestionnaire de dépendances (Maven/Gradle) dans ce projet — les jars sont inclus directement.
+### 1) Prérequis
 
-----
+- Java JDK 17+ recommandé
+- IntelliJ IDEA (ou VS Code avec extension Java)
 
-## 4) Compiler et exécuter (ligne de commande - macOS / zsh)
+### 2) Compilation et exécution (Windows PowerShell)
 
-Instructions prêtes à copier pour macOS (zsh). Ces commandes vont compiler tous les .java trouvés dans `src/` et lancer la classe `Restoswing` :
+Depuis la racine du projet :
+
+```powershell
+New-Item -ItemType Directory -Force out | Out-Null
+javac -cp "libs/*;lib/*" -d out (Get-ChildItem -Recurse -Filter *.java src | ForEach-Object { $_.FullName })
+java -cp "out;libs/*;lib/*" Restoswing
+```
+
+### 3) Compilation et exécution (macOS/Linux)
 
 ```bash
-# depuis la racine du projet
 mkdir -p out
-javac -cp "lib/*:libs/*" -d out $(find src -name "*.java")
-java -cp "out:lib/*:libs/*" Restoswing
+javac -cp "libs/*:lib/*" -d out $(find src -name "*.java")
+java -cp "out:libs/*:lib/*" Restoswing
 ```
 
-Remarques :
-- Le classpath utilise `:` (séparateur macOS/Unix). Si vous exécutez sur Windows, utilisez `;`.
-- Si votre shell ne supporte l'expansion `lib/*` comme attendu, précisez explicitement les jars.
+## 💻 Lancement depuis IntelliJ IDEA
 
-----
+1. Ouvrir le dossier du projet.
+2. Configurer un SDK Java (Project SDK).
+3. Ajouter les jars de `libs/` (et `lib/` si utilisé) dans les dépendances du module.
+4. Créer une configuration **Application** :
+   - Main class : `Restoswing`
+   - Use classpath of module : module principal
+5. Exécuter.
 
-## 5) Exécution depuis IntelliJ IDEA
+## 🔌 API utilisées
 
-1. Ouvrez le dossier du projet (`File > Open...` et choisissez le répertoire du projet).
-2. Assurez-vous qu'un SDK Java est configuré (Project Structure > SDKs / Project SDK).
-3. Ajoutez les jars externes (`lib/*.jar` et `libs/*.jar`) en tant que Libraries ou ajoutez-les au module (Project Structure > Modules > Dependencies).
-4. Créez une configuration de type "Application":
-   - Restoswing class : `Restoswing`
-   - Classpath: module classpath (les jars ajoutés seront pris en compte)
-5. Lancez avec le bouton Run.
+Le dossier `src/api/` contient les opérations principales :
 
-----
+- `api_liste_commandes` : récupération des commandes
+- `api_commande_accepter` : passage en préparation
+- `api_commande_refuser` : refus de commande
+- `api_commande_terminer` : marquage de fin de préparation
 
-## 6) Générer la Javadoc
+## 🧪 Vérification rapide
 
-DAO.Commande pour générer la Javadoc dans le dossier `javadoc/` :
+Après lancement de l’application :
 
-```bash
-# depuis la racine du projet
-mkdir -p javadoc
-javadoc -d javadoc -cp "lib/*:libs/*" -sourcepath src $(find src -name "*.java" | sed -e 's#^src/##' -e 's#/#.#g' -e 's#\.java$##')
+1. Ouvrir la liste des commandes.
+2. Sélectionner une commande pour afficher le détail.
+3. Tester les actions accepter/refuser/terminer.
+4. Vérifier qu’aucune exception Java n’apparaît dans la console.
+
+## 📚 Générer la Javadoc
+
+```powershell
+New-Item -ItemType Directory -Force javadoc | Out-Null
+javadoc -d javadoc -cp "libs/*;lib/*" -sourcepath src DAO ui api
 ```
 
-Le `find | sed` construit la liste des noms de classes (packages) à documenter. Vous pouvez aussi lister explicitement les packages (ex. `ui`) :
+## ℹ️ Informations du projet
 
-```bash
-javadoc -d javadoc -cp "lib/*:libs/*" -sourcepath src ui
-```
-
-----
-
-## 7) Tests / Vérification rapide
-
-Il n'y a pas de suite de tests automatisés fournie. Pour vérifier rapidement :
-
-- Compiler et exécuter (voir section 4) ;
-- Ouvrir l'interface et vérifier que les fenêtres s'affichent sans exceptions liées au classpath.
-
-----
-
-
+- **Projet** : RestoWeb - AP.SLAM BTS SIO 2ème année
+- **Institut** : LIMAYRAC
+- **Responsable** : Christophe PUEL
+- **Repository** : [https://github.com/FastAze/restoSwing](https://github.com/FastAze/restoSwing)

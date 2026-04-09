@@ -18,7 +18,7 @@ public class Commande_details extends JDialog {
     JLabel LOGINLabel;
     JLabel IDcommandLabel;
     private JButton buttonCancel;
-    public Commande_details(int idc) {
+    public Commande_details(int idc, String idEtat) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(revenirButton);
@@ -50,9 +50,10 @@ public class Commande_details extends JDialog {
         prêteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                api_commande_terminer apiTerm = new api_commande_terminer();
-                apiTerm.accepterTerminer(idc);
-
+                if (idEtat.equals("en préparation")) {
+                    api_commande_terminer apiTerm = new api_commande_terminer();
+                    apiTerm.accepterTerminer(idc);
+                }
             }
         });
     }

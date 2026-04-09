@@ -55,7 +55,9 @@ public class Commande_liste extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
-                Commande_details CommandeDetails = new Commande_details(selectedRow);
+                int idc = (int) currentTableData[selectedRow][0];
+
+                Commande_details CommandeDetails = new Commande_details(idc);
                 ArrayList<Ligne> lignes = (ArrayList<Ligne>) currentTableData[selectedRow][5];
 
                 String[] ColumnNames = {"ID Produit", "Nom Produit", "Quantité"};

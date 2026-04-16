@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Commande_liste extends JFrame {
     private JPanel main_menu;
+    private JScrollPane scrTbl;
     private JTable table1;
     private JButton detailsButton;
     private JButton quitterButton;
